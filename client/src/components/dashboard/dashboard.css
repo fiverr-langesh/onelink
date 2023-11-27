@@ -1,0 +1,993 @@
+:root {
+  --bg-dashboard: #ed8671;
+}
+
+.bodyWrapper {
+  background-color: #c5bfcf;
+  height: 100vh;
+  position: relative;
+  overflow: auto;
+}
+
+.sideMenu {
+  position: fixed;
+  width: 18%;
+  background-color: #4b4453;
+  left: 1%;
+  top: 1%;
+  bottom: 1%;
+  padding: 1rem 1rem;
+  border-radius: 1rem;
+}
+
+.contentSection {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 81%;
+  overflow: auto;
+  padding: 1rem 1rem;
+}
+
+.sideMenu .userProfile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid #fff;
+  padding: 1rem 2rem;
+}
+
+.sideMenu .userProfile img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.sideMenu .userProfile .username {
+  font-weight: 700;
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+.sideMenu .ytVideo {
+  margin-top: 2rem;
+}
+
+.sideMenu .ytVideo iframe {
+  width: 100%;
+  height: 180px;
+}
+
+.sideMenu .sideLinks {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.sideMenu .sideLinks .sideLink {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  padding: 1.2rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+}
+
+.sideMenu .sideLinks .sideLink.active,
+.sideMenu .sideLinks .sideLink:hover {
+  background-color: var(--bg-dashboard);
+}
+
+.sideMenu .sideLinks .sideLink .icon {
+  margin-right: 1.5rem;
+}
+
+.sideMenu .sideLinks .sideLink .premium {
+  float: right;
+}
+
+.sideMenu .groups {
+  position: relative;
+  background-color: #fff;
+  min-height: 300px;
+  border-radius: 1rem;
+  margin-top: 5rem;
+  /* overflow: hidden; */
+}
+
+.sideMenu .groups .premiumBtn {
+  position: absolute;
+  right: 8%;
+  top: -5%;
+}
+
+.sideMenu .groups .gHeading {
+  background-color: #7e60ae;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-radius: 1rem 1rem 0 0;
+}
+
+.sideMenu .groups .gHeading .mainTitle {
+  display: flex;
+}
+
+.sideMenu .groups .gHeading .mainTitle .plusBtn {
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+
+.sideMenu .groups .gHeading .mainTitle .title {
+  font-weight: 700;
+  color: #fff;
+}
+
+.sideMenu .groups .gHeading .groupBtn {
+  display: inline-block;
+}
+
+.sideMenu .groups .groupLink {
+  margin: 1rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #aaaaaa;
+  padding-bottom: 1rem;
+}
+
+.sideMenu .groups .groupLink .name {
+  font-weight: 500;
+}
+
+.sideMenu .groups .groupLink .groupIcons .actionBtn {
+  display: inline-block;
+}
+
+.sideMenu .groups .groupLink .groupIcons .actionBtn.deleteBtn {
+  margin-left: 1rem;
+}
+
+.dashboardHeader {
+  background-color: #ed8671;
+  border-radius: 1rem;
+  padding: 0.5rem 2rem;
+}
+
+.dashboardHeader .navbar .navBrand .groupName {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.dashboardHeader .navbar .navLinks {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5rem;
+}
+
+.dashboardHeader .navbar .navLinks .date {
+  font-weight: 500;
+  color: #fff;
+}
+
+.dashboardHeader .navbar .navLinks .upgradeBtn {
+  display: inline-block;
+  padding: 0.5rem 1.4rem;
+  text-decoration: none;
+  background-color: #fff;
+  font-weight: 600;
+  color: #7e60ae;
+  border-radius: 0.7rem;
+  border: 2px solid #cecece;
+}
+
+.dashboardHeader .navbar .navLinks .upgradeBtn img {
+  margin-right: 0.6rem;
+}
+
+.dashboardHeader .navbar .actionButtons {
+  display: flex;
+  gap: 2rem;
+}
+
+.dashboardHeader .navbar .actionButtons .aLink {
+  display: inline-block;
+}
+
+.mainContent .topPanel {
+  background-color: #fff;
+  padding: 1rem 2rem;
+  margin-top: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  height: 350px;
+}
+
+.mainContent .topPanel .input-group {
+  display: flex;
+  gap: 1rem;
+}
+
+.mainContent .topPanel .input-group .form-control {
+  background-color: #d6d6d6;
+  border: 0;
+  font-weight: 700;
+  border-radius: 0.4rem !important;
+  padding: 0.2rem 1.5rem;
+}
+
+.mainContent .topPanel .input-group .form-control::placeholder {
+  color: #aaaaaa;
+}
+
+.mainContent .topPanel .input-group .form-control:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.mainContent .topPanel .input-group .mainBtn {
+  background-color: #7e60ae;
+  border-color: #7e60ae;
+  border-radius: 0.5rem !important;
+}
+
+.mainContent .topPanel .input-group .addBtn {
+  background-color: #4b4453;
+}
+
+.mainContent .topPanel .formButtons {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 2rem;
+}
+
+.mainContent .topPanel .formButtons .mainBtn {
+  width: 25%;
+  background-color: #4b4453;
+  border-color: #4b4453;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.mainContent .topPanel .redioButtons {
+  display: flex;
+  gap: 1rem;
+}
+
+.mainContent .topPanel .redioButtons label {
+  margin-bottom: 0;
+  font-size: 1.2rem;
+  color: #4b4453;
+}
+.mainContent .topPanel .redioButtons .randomLBL {
+  color: #8a8a8a;
+}
+
+.mainContent .topPanel .redioButtons .form-check-input {
+  font-size: 1.3rem;
+}
+
+.mainContent .topPanel .redioButtons .form-check-input:checked {
+  background-color: #ed8671;
+  border-color: #ed8671;
+}
+
+.mainContent .topPanel .redioButtons .form-check-input:focus {
+  box-shadow: none;
+  outline: 0;
+}
+
+.mainContent .topPanel .input-group .customBtn {
+  position: relative;
+}
+
+.mainContent .topPanel .input-group .customBtn img {
+  position: absolute;
+  top: -30%;
+  left: 0%;
+}
+
+.mainContent .topPanel .input-group .copyBtn {
+  background-color: #ed8671;
+  border-color: #ed8671;
+}
+
+.mainContent .tableSection {
+  margin-top: 1rem;
+  background-color: transparent;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.mainContent .tableSection table {
+  width: 100%;
+  font-size: 14px;
+  border-collapse: separate;
+  border-spacing: 0 0.8rem;
+}
+
+.mainContent .tableSection table thead tr {
+  background-color: #4b4453 !important;
+}
+
+.mainContent .tableSection table thead th {
+  color: #ffffff;
+  background-color: transparent;
+  padding: 15px;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.mainContent .tableSection table tr {
+  background-color: #ed8671;
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+.mainContent .tableSection table .bodyTwo tr {
+  background-color: #a8a0af;
+  color: #4b4453;
+}
+
+.mainContent .tableSection table tr td {
+  padding: 0.5rem 1rem;
+}
+
+.mainContent .tableSection table tr td .tableBtn {
+  padding: 0 0.5rem;
+}
+
+.mainContent .tableSection table tr td .editBtn {
+  border-right: 1px solid #fff;
+}
+
+@media only screen and (max-width: 640px) {
+  .mainContent .tableSection table thead {
+    display: none;
+  }
+
+  .mainContent .tableSection table tbody {
+    display: block;
+  }
+
+  .mainContent .tableSection table tbody tr td {
+    display: flex;
+    align-items: center;
+    padding: 0;
+  }
+
+  .mainContent .tableSection table tbody tr {
+    margin-bottom: 20px;
+    display: block;
+    border: 1px solid #ed8671;
+    background: #f9f9f9;
+    overflow: hidden;
+  }
+
+  .mainContent .tableSection table tbody td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    width: 30%;
+    display: flex;
+    background: #ed8671;
+    color: #fff;
+    padding: 15px;
+    margin-inline-end: 10px;
+  }
+}
+
+.rightContent {
+  margin-top: 1rem;
+  background-color: #fff;
+  padding: 2rem 2rem;
+  height: 100%;
+  border-radius: 1rem;
+}
+
+.rightContent .rightActions {
+  background-color: #4b4453;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1.5rem;
+  border-radius: 1rem;
+  position: relative;
+}
+
+.rightContent .rightActions:first-child {
+  margin-bottom: 2rem;
+}
+
+.rightContent .rightActions .pTag {
+  position: absolute;
+  top: -5%;
+  right: 0;
+}
+
+.rightContent .rightActions .title {
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #fff;
+  border-bottom: 1px solid #fff;
+  text-align: center;
+  padding-bottom: 1rem;
+}
+
+.rightContent .rightActions .rightLink {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid #ed8671;
+  padding: 0.8rem 1.8rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  position: relative;
+}
+
+.rightContent .rightActions .rightLink .bTag {
+  position: absolute;
+  top: -20%;
+  right: 0;
+}
+
+.rightContent .rightActions .signalLink {
+  justify-content: center;
+}
+
+.rightContent .rightActions .rightLink .form-check .form-check-input {
+  font-size: 1.3rem;
+}
+
+.rightContent .rightActions .rightLink .form-check .form-check-input:focus {
+  outline: 0;
+  box-shadow: none;
+}
+
+.form-switch .form-check-input:checked {
+  background-image: url(../../../public/img/switch.png);
+  background-color: #fff;
+  border-color: #fff;
+}
+
+@media (max-width: 992px) {
+  .sideMenu {
+    display: none;
+  }
+  .contentSection {
+    width: 100%;
+  }
+
+  .mainContent .topPanel {
+    height: auto;
+  }
+
+  .mainContent .topPanel .input-group {
+    flex-direction: column;
+  }
+
+  .mainContent .topPanel .input-group .form-control {
+    width: 100%;
+    padding: 0.8rem 1.5rem;
+  }
+
+  .mainContent .topPanel .formButtons {
+    flex-direction: column-reverse;
+  }
+
+  .mainContent .topPanel .formButtons .mainBtn {
+    width: 100%;
+  }
+
+  .dashboardHeader {
+    border-radius: 0;
+  }
+
+  .dashboardHeader .navbar .navLinks {
+    display: none;
+  }
+
+  .contentSection {
+    padding: 0;
+  }
+}
+
+.mainContent .panelTwo {
+  justify-content: start;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.mainContent .panelTwo .topNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ed8671;
+  padding: 1rem 2rem;
+}
+
+.mainContent .panelTwo .topNav .navTitle {
+  font-weight: 700;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.mainContent .panelTwo .deleteBtn {
+  display: inline-block;
+  text-decoration: none;
+  padding: 0.3rem 1.7rem;
+  border: 1px solid #fff;
+  border-radius: 0.5rem;
+}
+
+.mainContent .tableSectionTwo {
+  position: relative;
+  height: 48vh;
+  background-color: #fff;
+}
+
+.mainContent .tableSectionTwo .nodeImage,
+.mainContent .panelTwo .nodeImage {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.mainContent .tableSectionTwo .nodeImage .noteTitle,
+.mainContent .panelTwo .nodeImage .noteTitle {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #4b4453;
+}
+
+.mainContent .rightContentTwo {
+  height: 85vh;
+  background-color: #4b4453;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainContent .rightContentTwo .errorContent {
+  text-align: center;
+}
+
+.mainContent .rightContentTwo .errorContent .errorTitle {
+  font-weight: 600;
+  color: #fff;
+  padding: 1rem 0;
+  border-bottom: 1px solid #fff;
+}
+
+.mainContent .rightContentTwo .errorContent .text {
+  color: #fff;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+/*  add group page */
+
+.mainContent .panelTwo .recordTable {
+  padding: 0 1rem;
+}
+
+.mainContent .panelTwo .recordTable .table {
+  text-align: center;
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
+}
+
+.mainContent .panelTwo .recordTable .table tr,
+.mainContent .panelTwo .recordTable .table tr td {
+  border: 0;
+  font-weight: 600;
+  color: #4b4453;
+  padding: 0;
+}
+
+.mainContent .panelTwo .recordTable .table tr .highlight {
+  background-color: #e6e6e6;
+  color: #4b4453;
+  width: 35%;
+  line-height: 3;
+}
+
+.mainContent .panelTwo .recordTable .table tr .useBtn {
+  display: inline-block;
+  background-color: var(--bg-dashboard);
+  text-decoration: none;
+  color: #fff;
+  padding: 0.7rem 1.5rem;
+  border-radius: 0.4rem;
+  font-weight: 400;
+}
+
+.mainContent .panelTwo .recordTable .table tr .tableBtn {
+  display: inline-block;
+  border: 1px solid #4b4453;
+  padding: 0.5rem 0.5rem !important;
+  border-radius: 0.4rem !important;
+}
+
+.mainContent .panelTwo .recordTable .table tr .dataButtons {
+  display: flex;
+  gap: 1rem;
+}
+
+.mainContent .rightContentTwo {
+  justify-content: start;
+  align-items: start;
+}
+
+.mainContent .rightContentTwo .addCheckbox .title {
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 3rem;
+}
+
+.mainContent .rightContentTwo .addCheckbox .form-check {
+  background-color: #fff;
+  padding: 1rem 2rem;
+  margin-bottom: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.mainContent .rightContentTwo .addCheckbox .form-check .form-check-input {
+  display: inline-block;
+  background-color: #b1b1b1;
+}
+
+.mainContent
+  .rightContentTwo
+  .addCheckbox
+  .form-check
+  .form-check-input:checked {
+  background-color: var(--bg-dashboard);
+  border-color: var(--bg-dashboard);
+}
+
+.mainContent .rightContentTwo .addCheckbox .form-check .form-check-input:focus {
+  outline: 0;
+  box-shadow: none;
+}
+
+.mainContent .rightContentTwo .addCheckbox .form-check label {
+  margin-left: 1rem;
+  font-weight: 600;
+  color: #4b4453;
+}
+
+.mainContent .rightContentTwo .addCheckbox .addButtons {
+  margin-top: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.mainContent .rightContentTwo .addCheckbox .addButtons .mainBtn {
+  border-radius: 0.4rem;
+  background-color: #fff;
+  border-color: #fff;
+  color: #4b4453;
+}
+
+.mainContent .rightContentTwo .addCheckbox .addButtons .saveBtn {
+  background-color: var(--bg-dashboard);
+  border-color: var(--bg-dashboard);
+  color: #fff;
+}
+
+.groupModel .title {
+  text-align: center;
+  margin-block: 3rem;
+  font-weight: 700;
+  color: var(--bg-dashboard);
+  font-size: 1.8rem;
+}
+
+.groupModel .addButtons {
+  margin-top: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.groupModel .addButtons .mainBtn {
+  border-radius: 0.4rem;
+  background-color: #d8d8d8;
+  border-color: #d8d8d8;
+  color: #4b4453;
+}
+
+.groupModel .addButtons .mainBtn.saveBtn {
+  background-color: var(--bg-dashboard);
+  border-color: var(--bg-dashboard);
+  color: #fff;
+}
+
+/* === --------------------------- SCHEDULE PAGE ----------------------------- === */
+.scheduleSection {
+  position: relative;
+}
+
+.scheduleSection .schedulMenu {
+  position: fixed;
+  background-color: var(--bg-dashboard);
+  top: 3%;
+  bottom: 3%;
+  left: 1%;
+  width: 17%;
+  border-radius: 1rem;
+  padding: 2rem 2rem;
+}
+
+.scheduleSection .rightlMenu {
+  position: fixed;
+  background-color: var(--bg-dashboard);
+  top: 3%;
+  bottom: 3%;
+  right: 1%;
+  width: 17%;
+  border-radius: 1rem;
+  padding: 6rem 1rem;
+}
+
+.scheduleSection .schedulMenu .menuContent .title {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 1.8rem;
+}
+
+.scheduleSection .schedulMenu .menuContent .schedulBtn {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 0.8rem 1.8rem;
+  border-radius: 0.6rem;
+  font-weight: 700;
+}
+
+.scheduleSection .schedulMenu .menuContent hr {
+  background-color: transparent;
+  border-top: 2px solid #ffffff;
+}
+
+.scheduleSection .rightlMenu .rightPanel {
+  background-color: #fff;
+  height: 100%;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 0 2rem;
+}
+
+.scheduleSection .rightlMenu .rightPanel .text {
+  color: #6b6a6d;
+  font-size: 1rem;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.scheduleSection .mainSchedule {
+  width: 62%;
+  margin: auto;
+  margin-top: 2rem;
+}
+
+.scheduleSection .mainSchedule .sectionHeading .title {
+  font-weight: 700;
+  color: #4b4453;
+}
+
+.scheduleSection .calendar {
+  margin: auto;
+}
+.scheduleSection .calendar .months {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-block: 3rem;
+  font-weight: 600;
+  color: #4b4453;
+}
+
+.scheduleSection .calendar .day {
+  width: 100%;
+}
+
+.scheduleSection .calendar .day .dayHead,
+.scheduleSection .calendar .day .dayBody {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.scheduleSection .calendar .day .dayHead .dHead {
+  height: 60px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  color: #4b4453;
+  border-radius: 50%;
+}
+
+.scheduleSection .calendar .day .dayBody .value {
+  height: 60px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  color: #4b4453;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.scheduleSection .calendar .day .dayBody .value:hover,
+.scheduleSection .calendar .day .dayBody .value.active {
+  background-color: var(--bg-dashboard);
+  color: #fff;
+}
+
+.scheduleSection .calendar .year .dropdown .dropdown-toggle {
+  font-size: 2rem;
+  background-color: transparent;
+  border: 0;
+  color: #4b4453;
+  font-weight: 700;
+}
+
+.scheduleSection .calendar .year .dropdown .dropdown-item {
+  font-size: 1.4rem;
+  border-bottom: 1px solid #6b6a6d;
+  font-weight: 600;
+  color: #4b4453;
+}
+
+.scheduleSection .calendar .year .dropdown .dropdown-item.active {
+  background-color: transparent;
+  color: var(--bg-dashboard);
+}
+
+.scheduleSection .calendar .year .dropdown .dropdown-menu {
+  padding: 0.4rem 1rem;
+  height: 250px;
+  overflow: auto;
+}
+
+.scheduleSection .rightlMenu .darkPanel {
+  background-color: #4b4453;
+  justify-content: start;
+  align-items: start;
+  padding: 2rem 1rem;
+}
+
+.scheduleSection .rightlMenu .darkPanel .title {
+  font-weight: 600;
+  color: #fff;
+}
+
+.scheduleSection .rightlMenu .darkPanel hr {
+  display: block;
+  background-color: #fff !important;
+  border-color: #fff;
+}
+
+.scheduleSection .rightlMenu .panelControl {
+  margin-top: 2rem;
+  text-align: start;
+}
+
+.scheduleSection .rightlMenu .panelControl .item .cTitle {
+  color: var(--bg-dashboard);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.scheduleSection .rightlMenu .panelControl .item .groupBtn {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  margin-bottom: 2rem;
+  border: 1px solid #fff;
+  padding: 0.8rem 1.8rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  font-weight: 600;
+}
+
+.scheduleSection .rightlMenu .panelControl .item .groupBtn img {
+  margin-left: 0.5rem;
+}
+
+.scheduleSection .rightlMenu .panelControl .panelButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 4rem;
+}
+
+.scheduleSection .rightlMenu .panelControl .panelButtons .mainBtn {
+  background-color: #fff;
+  border-color: #fff;
+  color: #4b4453;
+  border-radius: 0.4rem;
+  padding: 0.5rem 1rem;
+}
+
+.scheduleSection .rightlMenu .panelControl .panelButtons .mainBtn.stopBtn {
+  background-color: var(--bg-dashboard);
+  border-color: var(--bg-dashboard);
+  color: #fff;
+}
+
+.scheduleSection .schedulMenu .menuContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.scheduleSection .schedulMenu .menuContent .group {
+  background-color: #fff;
+  padding: 1rem 1rem;
+  border-radius: 0.5rem;
+  position: relative;
+}
+
+.scheduleSection .schedulMenu .menuContent .group .pointerImage {
+  position: absolute;
+  top: 25%;
+  right: 30%;
+}
+
+.scheduleSection .schedulMenu .menuContent .group .text {
+  color: #4b4453;
+  font-weight: 500;
+}
+
+.scheduleSection .schedulMenu .menuContent .group .groupName {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--bg-dashboard);
+  margin-bottom: 1rem;
+}
+
+.scheduleSection .schedulMenu .menuContent .groupTwo {
+  background-color: transparent;
+}
+
+.scheduleSection .schedulMenu .menuContent .groupTwo .groupName {
+  color: #fff;
+}

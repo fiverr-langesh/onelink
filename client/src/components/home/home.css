@@ -1,0 +1,447 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800;900&display=swap");
+
+/* 
+=== HEADER SECTION ===
+ */
+
+.headerSection .navbar {
+  background-color: var(--bg-body);
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  margin: 1.5rem 2rem;
+}
+
+.headerSection .navbar .navbar-brand {
+  color: var(--text-white);
+  font-weight: 700;
+}
+
+.headerSection .navbar .nav-link {
+  margin-left: 1rem;
+  color: var(--text-white);
+}
+
+.headerSection .navbar .nav-link:hover,
+.headerSection .navbar .nav-link.active {
+  color: #a692ff;
+}
+
+.headerSection .navbar .navButtons {
+  margin-left: 1rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.headerSection .navbar .navButtons .mainBtn {
+  background-color: var(--text-white);
+  color: var(--bg-primary);
+  padding: 0.6rem 1.8rem;
+}
+
+.headerSection .navbar .navButtons .outlineBtn {
+  padding: 0.5rem 1.2rem;
+  border-radius: 1rem;
+}
+
+.headerSection .navbar .navbar-toggler,
+.headerSection .navbar .navbar-toggler:focus {
+  outline: 0;
+  border: 0;
+  box-shadow: none;
+}
+
+/* 
+=== HERO SECTION ===
+ */
+
+.heroSection {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heroSection .heroRow {
+  justify-content: center;
+  align-items: center;
+}
+
+.heroSection .heroContent .title {
+  font-size: 4rem;
+  font-weight: 900;
+  color: var(--bg-body);
+  line-height: 1;
+  margin-bottom: 2rem;
+}
+
+.heroSection .heroContent .text {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--bg-body);
+  margin-bottom: 1rem;
+}
+
+.heroSection .heroContent .text span {
+  color: var(--bg-primary);
+}
+
+.heroSection .heroContent .mainBtn {
+  font-size: 1.8rem;
+}
+
+.heroSection .heroImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.numberSection {
+  background-color: var(--bg-primary);
+  color: var(--text-white);
+  padding: 3rem 0;
+}
+
+.numberSection .numberRow {
+  justify-content: center;
+  align-items: center;
+}
+
+.numberSection .item {
+  text-align: center;
+  border-left: 2px solid #fff;
+}
+
+.numberSection .item.frist {
+  border: 0;
+}
+
+.numberSection .item .value {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+/* ===
+CLICK SECTION
+=== */
+
+.clickSection {
+  background-color: #386517;
+  color: #ffd28c;
+}
+
+.clickSection .heroContent .title {
+  color: #ffd28c;
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.clickSection .heroContent .text {
+  color: #ffd28c;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.clickSection .heroContent .outlineBtn {
+  border-color: #ffd28c;
+  color: #ffd28c !important;
+}
+
+/* ===
+UPDATE SECTION
+=== */
+
+.updateSection {
+  background-color: #e7bbe4;
+}
+
+.updateSection .heroContent .title {
+  color: #780017;
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.updateSection .heroContent .text {
+  color: #780017;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.updateSection .heroContent .outlineBtn {
+  border-color: #780017;
+  color: #780017 !important;
+}
+
+/* ===
+ENDLESS SECTION
+=== */
+
+.endlessSection {
+  background-color: #674cc4;
+}
+
+.endlessSection .heroContent .title {
+  color: #fff;
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.endlessSection .heroContent .text {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.endlessSection .heroContent .outlineBtn {
+  border-color: #fff;
+  color: #fff !important;
+}
+
+/* ===
+PRICING SECTION
+=== */
+
+.pricingSection {
+  margin-block: 100px;
+}
+
+.pricingSection .tab-content {
+  display: none;
+}
+
+.pricingSection .active-tab {
+  display: block;
+}
+
+.pricingSection .sectionHeading {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.pricingSection .sectionHeading .title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--bg-body);
+}
+
+.pricingSection .pricinghButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100vw;
+}
+
+.pricingSection .pricinghButtons .btn-group {
+  border-radius: 100vw;
+  border: 2px solid var(--bg-primary);
+  overflow: hidden;
+}
+
+.pricingSection .pricinghButtons .btn-group .priceBtn {
+  display: inline-block;
+  background-color: transparent;
+  padding: 0.8rem 1.8rem;
+  border: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.pricingSection .pricinghButtons .btn-group .priceBtn.active {
+  background-color: var(--bg-primary);
+  border-radius: 100vw;
+  color: var(--text-white);
+}
+
+.pricingSection .priceTable {
+  margin-top: 3rem;
+  background-color: #fff;
+  box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.1);
+  padding: 2rem !important;
+}
+
+.pricingSection .priceTable .table td {
+  width: 28%;
+  color: #535353;
+}
+
+.pricingSection .priceTable .table .topHeading {
+  border: 0 !important;
+}
+
+.pricingSection .priceTable .table th {
+  border: 0 !important;
+  margin-bottom: 1rem;
+}
+
+.pricingSection .priceTable .table .sTitle {
+  text-align: start;
+}
+
+.pricingSection .priceTable .table td i.fa.fa-chevron-up {
+  margin-right: 1rem;
+  border: 2px solid #ac7d33;
+  color: #ac7d33;
+  padding: 0.5rem 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.pricingSection .priceTable .table td i.fa.fa-chevron-down {
+  margin-right: 1rem;
+  color: #7e7e7e;
+  padding: 0.5rem 0.5rem;
+  border-radius: 50%;
+}
+
+.pricingSection .priceTable .table td:first-child {
+  font-weight: 700;
+  text-align: start;
+}
+
+.pricingSection .priceTable .table td:last-child {
+  background-color: #f3efde;
+}
+
+.pricingSection .priceTable .table td.uncheck {
+  color: #afafaf;
+}
+
+.pricingSection .priceTable .table tr th {
+  font-size: 1.4rem;
+}
+
+.pricingSection .priceTable .table {
+  text-align: center;
+}
+
+.pricingSection .priceTable .table tr th .tTitle {
+  display: inline-block;
+  color: var(--bg-primary);
+  border: 1px solid var(--bg-primary);
+  padding: 0.5rem 1.5rem;
+  border-radius: 100vw;
+}
+
+.pricingSection .priceTable .table tr th .mTitle img {
+  cursor: pointer;
+}
+
+.pricingSection .priceTable .tableButtons {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+.pricingSection .priceTable .tableButtons .outlineBtn {
+  color: var(--bg-primary) !important;
+  border-radius: 0.8rem;
+}
+
+.custom-tooltip {
+  --bs-tooltip-bg: var(--bg-primary);
+  --bs-tooltip-color: var(--text-white);
+  font-size: 1.2rem;
+  font-family: inherit !important;
+}
+
+/* ===
+FAQ'S SECTION
+=== */
+
+.faqSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-block: 100px;
+  background-color: var(--bg-primary);
+  padding: 4rem 0;
+}
+
+.faqSection .sectionHeading {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.faqSection .sectionHeading .title {
+  font-weight: 700;
+  color: var(--text-white);
+}
+
+.faqSection .mainFaq .accordion {
+  background-color: var(--bg-primary) !important;
+}
+
+.faqSection .mainFaq .accordion .accordion-item {
+  margin-bottom: 2rem;
+}
+
+.faqSection .mainFaq .accordion .accordion-item .accordion-button {
+  background-color: var(--bg-primary);
+  color: var(--text-white);
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.faqSection .mainFaq .accordion .accordion-item .accordion-button::after {
+  background-image: url(../../../public/img/arrowDown.svg) !important;
+}
+
+.faqSection .mainFaq .accordion .accordion-item .accordion-button:focus {
+  box-shadow: none;
+  outline: 0;
+}
+
+.faqSection .mainFaq .accordion .accordion-item .accordion-body {
+  background-color: var(--bg-primary);
+  color: #fff;
+}
+
+.startSection {
+  min-height: 100vh;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  background-color: #fff5e7;
+  padding: 3rem 0;
+}
+
+.startSection .sectionHeading .title {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.startSection .sectionHeading .title span {
+  color: #386517;
+  font-size: 3.5rem;
+  position: relative;
+}
+
+.startSection .sectionHeading .title span::after {
+  content: "";
+  position: absolute;
+  bottom: -10%;
+  left: 0;
+  height: 20px;
+  width: 100%;
+  background-image: url(../../../public/img/linkGb.svg);
+  background-position: center;
+  background-size: cover;
+}
+
+.startSection .startBtn {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.startSection .startBtn .mainBtn {
+  font-size: 6rem;
+  width: 80%;
+  padding: 4rem 0;
+  border-radius: 1rem;
+  background-color: #386517;
+  border-color: #386517;
+}
