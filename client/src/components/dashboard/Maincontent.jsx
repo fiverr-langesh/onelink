@@ -1,11 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Modal } from "react-bootstrap";
 import api from "../../utils/api";
 
 function Maincontent() {
   const [state, setState] = React.useState({ links: [], fallbackUrl: "" });
   const [url, setUrl] = React.useState("");
   const [fallback, setFallback] = useState("");
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const [restore, setRestore] = useState(false);
+
+  const closeRestore = () => setRestore(false);
+  const showRestore = () => setRestore(true);
+
+  const [loop, setloop] = useState(false);
+
+  const closeLoop = () => setloop(false);
+  const showLoop = () => setloop(true);
 
   useEffect(() => {
     async function getUrl() {
@@ -29,7 +44,11 @@ function Maincontent() {
 
   async function saveLinks() {
     console.log(state);
-    const res = await api.post("/link/save", { links: state.links,fallbackUrl:state.fallbackUrl });
+    handleClose();
+    const res = await api.post("/link/save", {
+      links: state.links,
+      fallbackUrl: state.fallbackUrl,
+    });
 
     if (res.status === 200) {
       alert("Links saved successfully");
@@ -79,6 +98,14 @@ function Maincontent() {
     }));
   }
 
+  async function generateMainLink() {
+    const res = await api.post("/link/main", { type: "random" });
+    
+    if (res.status === 200) {
+      alert("Link generated successfully");
+    }
+  }
+
   return (
     <section className="mainContent">
       <Container fluid>
@@ -126,9 +153,9 @@ function Maincontent() {
                   </form>
 
                   <div className="formButtons">
-                    <a href="#link" className="mainBtn">
+                    <button onClick={generateMainLink} className="mainBtn">
                       Generate
-                    </a>
+                    </button>
 
                     <div className="redioButtons">
                       <div class="form-check">
@@ -259,7 +286,7 @@ function Maincontent() {
           <Col lg={"3"}>
             <div className="rightContent">
               <div className="rightActions">
-                <button onClick={saveLinks} className="rightLink signalLink">
+                <button onClick={handleShow} className="rightLink signalLink">
                   Save List
                   <img
                     src="/img/premium.png"
@@ -267,15 +294,15 @@ function Maincontent() {
                     className="img-fluid bTag"
                   />
                 </button>
-                <a href="#link" className="rightLink signalLink">
+                <button onClick={showRestore} className="rightLink signalLink">
                   Reset
                   <img
                     src="/img/premium.png"
                     alt="premium"
                     className="img-fluid bTag"
                   />
-                </a>
-                <a href="#link" className="rightLink">
+                </button>
+                <button className="rightLink">
                   Delete List <br /> after x uses
                   <div class="form-check form-switch">
                     <input
@@ -290,7 +317,7 @@ function Maincontent() {
                     alt="premium"
                     className="img-fluid bTag"
                   />
-                </a>
+                </button>
                 <a href="#link" className="rightLink">
                   Delete List
                   <div class="form-check form-switch">
@@ -307,7 +334,7 @@ function Maincontent() {
                     className="img-fluid bTag"
                   />
                 </a>
-                <a href="#link" className="rightLink">
+                <button onClick={showLoop} className="rightLink">
                   Loop
                   <div class="form-check form-switch">
                     <input
@@ -322,7 +349,7 @@ function Maincontent() {
                     alt="premium"
                     className="img-fluid bTag"
                   />
-                </a>
+                </button>
               </div>
               <div className="rightActions">
                 <img
@@ -369,6 +396,58 @@ function Maincontent() {
           </Col>
         </Row>
       </Container>
+
+      <Modal show={show} onHide={handleClose} className="groupModel">
+        <Modal.Body>
+          <h4 className="title">Do you want to save the entire link .</h4>
+
+          <div className="addButtons">
+            <a href="#link" className="mainBtn" onClick={handleClose}>
+              Cancel
+            </a>
+            <button
+              className="mainBtn saveBtn"
+              onClick={() => {
+                saveLinks();
+              }}
+            >
+              Yes
+            </button>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      <Modal show={restore} onHide={closeRestore} className="groupModel">
+        <Modal.Body>
+          <h4 className="title">
+            Do you want to restore the entire link again.
+          </h4>
+
+          <div className="addButtons">
+            <a href="#link" className="mainBtn" onClick={closeRestore}>
+              Cancel
+            </a>
+            <a href="#link" className="mainBtn saveBtn" onClick={showRestore}>
+              Yes
+            </a>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      <Modal show={loop} onHide={closeLoop} className="groupModel">
+        <Modal.Body>
+          <h4 className="title">Do you want to activate the loop options?</h4>
+
+          <div className="addButtons">
+            <a href="#link" className="mainBtn" onClick={closeLoop}>
+              Cancel
+            </a>
+            <a href="#link" className="mainBtn saveBtn" onClick={showLoop}>
+              Yes
+            </a>
+          </div>
+        </Modal.Body>
+      </Modal>
     </section>
   );
 }

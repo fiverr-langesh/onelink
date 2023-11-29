@@ -16,6 +16,7 @@ const schema = new mongoose.Schema(
       value: String,
       type: { type: String, default: "linear" },
     },
+    mainUrlId: String,
   },
   {
     collection: "links",

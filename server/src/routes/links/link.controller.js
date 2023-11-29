@@ -1,8 +1,11 @@
 const { Link } = require("../../models/link.model");
 const { format } = require("date-fns");
 
+require("dotenv").config();
+const PORT = process.env.PORT;
+
 // GET /api/link - get all links
-async function getLinks(req, res) { 
+async function getLinks(req, res) {
   try {
     const links = await Link.findOne({ groupId: "default", userId: "default" });
 
@@ -34,7 +37,7 @@ async function saveLink(req, res) {
   try {
     let { links, groupId, userId, fallbackUrl } = req.body;
 
-    console.log(fallbackUrl)
+    console.log(fallbackUrl);
 
     if (!groupId && !userId) {
       groupId = "default";
@@ -110,6 +113,39 @@ async function deleteAllLinks(req, res) {
   }
 }
 
+// POST /api/link/main - set main link
+async function setMainLink(req, res) {
+  try {
+    const { type } = req.body;
+
+    // random 10 digit mainURLID
+    const mainUrlId = Math.random().toString(36).substr(2, 10);
+
+    const url = `http://localhost:${PORT}/${mainUrlId}`;
+
+    const mainUrl = {
+      value: url,
+      type,
+    };
+
+    const link = await Link.findOneAndUpdate(
+      { groupId: "default", userId: "default" },
+      {
+        mainUrlId,
+        mainUrl,
+      },
+      { new: true }
+    );
+
+    res.status(200).json({ message: "Main link set", mainUrl });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+}
+
+
+
 module.exports = {
   createLink,
   getLinks,
@@ -117,4 +153,5 @@ module.exports = {
   updateLink,
   deleteLink,
   deleteAllLinks,
+  setMainLink,
 };
