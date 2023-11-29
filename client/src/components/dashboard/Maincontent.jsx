@@ -1,7 +1,84 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import api from "../../utils/api";
 
 function Maincontent() {
+  const [state, setState] = React.useState({ links: [], fallbackUrl: "" });
+  const [url, setUrl] = React.useState("");
+  const [fallback, setFallback] = useState("");
+
+  useEffect(() => {
+    async function getUrl() {
+      const res = await api.get("/link");
+
+      if (res.data.links?.length > 0 && res.status === 200) {
+        setState((prev) => {
+          return {
+            ...prev,
+            links: res.data.links,
+            fallbackUrl: res.data.fallbackUrl,
+          };
+        });
+
+        setFallback(res.data.fallbackUrl);
+      }
+    }
+
+    getUrl();
+  }, []);
+
+  async function saveLinks() {
+    console.log(state);
+    const res = await api.post("/link/save", { links: state.links,fallbackUrl:state.fallbackUrl });
+
+    if (res.status === 200) {
+      alert("Links saved successfully");
+    }
+  }
+
+  function addUrl(e) {
+    e.preventDefault();
+
+    if (url) {
+      const day = new Date().getDate();
+      const month = new Date().getMonth();
+      const year = new Date().getFullYear() % 100; // Extract last two digits
+      const date = `${day}/${month}/${year}`;
+
+      const id = Math.floor(Math.random() * 1000000000);
+
+      const payload = {
+        id,
+        url,
+        date,
+        status: "Active",
+      };
+
+      setState((prev) => {
+        return {
+          ...prev,
+          links: [...prev.links, payload],
+        };
+      });
+      setUrl("");
+    }
+  }
+
+  function deleteUrl(id) {
+    const updatedLinks = state.links.filter((item) => {
+      if (item.id) {
+        return item.id !== id;
+      } else {
+        return item._id !== id;
+      }
+    });
+
+    setState((prev) => ({
+      ...prev,
+      links: updatedLinks,
+    }));
+  }
+
   return (
     <section className="mainContent">
       <Container fluid>
@@ -10,11 +87,14 @@ function Maincontent() {
             <Row className="panelContent">
               <Col lg={"12"}>
                 <div className="topPanel">
-                  <form className="input-group">
+                  <form onSubmit={addUrl} className="input-group">
                     <input
+                      id="url"
                       type="text"
                       className="form-control"
                       placeholder="enter Url"
+                      value={url}
+                      onChange={(e) => setUrl(e.target.value)}
                     />
 
                     <button className="mainBtn" type="submit">
@@ -26,9 +106,21 @@ function Maincontent() {
                       type="text"
                       className="form-control"
                       placeholder="enter Url"
+                      value={fallback}
+                      onChange={(e) => setFallback(e.target.value)}
                     />
 
-                    <button className="mainBtn addBtn" type="submit">
+                    <button
+                      onClick={() => {
+                        setState((prev) => {
+                          return {
+                            ...prev,
+                            fallbackUrl: fallback,
+                          };
+                        });
+                      }}
+                      className="mainBtn addBtn"
+                    >
                       Add fallback Url
                     </button>
                   </form>
@@ -103,141 +195,61 @@ function Maincontent() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>https://www.waves.com/</td>
-                        <td>10/11/23</td>
-                        <td>Active</td>
-                        <td>
-                          <a href="#link" className="tableBtn editBtn">
-                            <img
-                              src="/img/tedit.svg"
-                              alt="edit"
-                              className="img-fluid"
-                            />
-                          </a>
-                          <a href="#link" className="tableBtn deleteBtn">
-                            <img
-                              src="/img/tdelete.svg"
-                              alt="edit"
-                              className="img-fluid"
-                            />
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>https://www.waves.com/</td>
-                        <td>10/11/23</td>
-                        <td>Active</td>
-                        <td>
-                          <a href="#link" className="tableBtn editBtn">
-                            <img
-                              src="/img/tedit.svg"
-                              alt="edit"
-                              className="img-fluid"
-                            />
-                          </a>
-                          <a href="#link" className="tableBtn deleteBtn">
-                            <img
-                              src="/img/tdelete.svg"
-                              alt="edit"
-                              className="img-fluid"
-                            />
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>https://www.waves.com/</td>
-                        <td>10/11/23</td>
-                        <td>Active</td>
-                        <td>
-                          <a href="#link" className="tableBtn editBtn">
-                            <img
-                              src="/img/tedit.svg"
-                              alt="edit"
-                              className="img-fluid"
-                            />
-                          </a>
-                          <a href="#link" className="tableBtn deleteBtn">
-                            <img
-                              src="/img/tdelete.svg"
-                              alt="edit"
-                              className="img-fluid"
-                            />
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>https://www.waves.com/</td>
-                        <td>10/11/23</td>
-                        <td>Active</td>
-                        <td>
-                          <a href="#link" className="tableBtn editBtn">
-                            <img
-                              src="/img/tedit.svg"
-                              alt="edit"
-                              className="img-fluid"
-                            />
-                          </a>
-                          <a href="#link" className="tableBtn deleteBtn">
-                            <img
-                              src="/img/tdelete.svg"
-                              alt="edit"
-                              className="img-fluid"
-                            />
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>https://www.waves.com/</td>
-                        <td>10/11/23</td>
-                        <td>Active</td>
-                        <td>
-                          <a href="#link" className="tableBtn editBtn">
-                            <img
-                              src="/img/tedit.svg"
-                              alt="edit"
-                              className="img-fluid"
-                            />
-                          </a>
-                          <a href="#link" className="tableBtn deleteBtn">
-                            <img
-                              src="/img/tdelete.svg"
-                              alt="edit"
-                              className="img-fluid"
-                            />
-                          </a>
-                        </td>
-                      </tr>
+                      {state.links.map((item) => {
+                        if (item.status === "Active") {
+                          return (
+                            <tr key={item.id || item._id}>
+                              <td>{item.url}</td>
+                              <td>{item.date}</td>
+                              <td>{item.status}</td>
+                              <td>
+                                <a href="#link" className="tableBtn editBtn">
+                                  <img
+                                    src="/img/tedit.svg"
+                                    alt="edit"
+                                    className="img-fluid"
+                                  />
+                                </a>
+                                <a href="#link" className="tableBtn deleteBtn">
+                                  <img
+                                    src="/img/tdelete.svg"
+                                    alt="edit"
+                                    className="img-fluid"
+                                    onClick={() =>
+                                      deleteUrl(item.id || item._id)
+                                    }
+                                  />
+                                </a>
+                              </td>
+                            </tr>
+                          );
+                        }
+                      })}
                     </tbody>
                     <tbody className="bodyTwo">
-                      <tr>
-                        <td>https://www.waves.com/</td>
-                        <td>10/11/23</td>
-                        <td>Used</td>
-                        <td>
-                          <a href="#link" className="tableBtn deleteBtn">
-                            <img
-                              src="/img/delete.svg"
-                              alt="edit"
-                              className="img-fluid"
-                            />
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>https://www.waves.com/</td>
-                        <td>10/11/23</td>
-                        <td>Used</td>
-                        <td>
-                          <a href="#link" className="tableBtn deleteBtn">
-                            <img
-                              src="/img/delete.svg"
-                              alt="edit"
-                              className="img-fluid"
-                            />
-                          </a>
-                        </td>
-                      </tr>
+                      {state.links.map((item) => {
+                        if (item.status === "Used") {
+                          return (
+                            <tr key={item.id || item._id}>
+                              <td>{item.url}</td>
+                              <td>{item.date}</td>
+                              <td>{item.status}</td>
+                              <td>
+                                <a href="#link" className="tableBtn deleteBtn">
+                                  <img
+                                    src="/img/delete.svg"
+                                    alt="edit"
+                                    className="img-fluid"
+                                    onClick={() =>
+                                      deleteUrl(item.id || item._id)
+                                    }
+                                  />
+                                </a>
+                              </td>
+                            </tr>
+                          );
+                        }
+                      })}
                     </tbody>
                   </table>
                 </div>
@@ -247,14 +259,14 @@ function Maincontent() {
           <Col lg={"3"}>
             <div className="rightContent">
               <div className="rightActions">
-                <a href="#link" className="rightLink signalLink">
+                <button onClick={saveLinks} className="rightLink signalLink">
                   Save List
                   <img
                     src="/img/premium.png"
                     alt="premium"
                     className="img-fluid bTag"
                   />
-                </a>
+                </button>
                 <a href="#link" className="rightLink signalLink">
                   Reset
                   <img
