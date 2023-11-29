@@ -8,13 +8,13 @@ const schema = new mongoose.Schema(
       {
         url: String,
         date: String,
-        status: { type: String, default: "active" },
+        status: { type: String, default: "Active" },
       },
     ],
     fallbackUrl: String,
     mainUrl: {
       value: String,
-      type: { type: String, default: "linear" },
+      type: { type: String, default: "lineal" },
     },
     mainUrlId: String,
   },

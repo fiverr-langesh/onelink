@@ -37,8 +37,6 @@ async function saveLink(req, res) {
   try {
     let { links, groupId, userId, fallbackUrl } = req.body;
 
-    console.log(fallbackUrl);
-
     if (!groupId && !userId) {
       groupId = "default";
       userId = "default";

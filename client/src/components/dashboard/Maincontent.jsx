@@ -3,9 +3,17 @@ import { Col, Container, Row, Modal } from "react-bootstrap";
 import api from "../../utils/api";
 
 function Maincontent() {
-  const [state, setState] = React.useState({ links: [], fallbackUrl: "" });
+  const [state, setState] = React.useState({
+    links: [],
+    fallbackUrl: "",
+    mainLink: {
+      type: "lineal",
+      value: "",
+    },
+  });
   const [url, setUrl] = React.useState("");
   const [fallback, setFallback] = useState("");
+  const [copied, setCopied] = useState(false);
 
   const [show, setShow] = useState(false);
 
@@ -23,15 +31,20 @@ function Maincontent() {
   const showLoop = () => setloop(true);
 
   useEffect(() => {
+    console.log(state)
+  },[state])
+
+  useEffect(() => {
     async function getUrl() {
       const res = await api.get("/link");
 
-      if (res.data.links?.length > 0 && res.status === 200) {
+      if (res.data?.links?.length > 0 && res.status === 200) {
         setState((prev) => {
           return {
             ...prev,
             links: res.data.links,
             fallbackUrl: res.data.fallbackUrl,
+            mainLink: res.data.mainUrl,
           };
         });
 
@@ -100,10 +113,51 @@ function Maincontent() {
 
   async function generateMainLink() {
     const res = await api.post("/link/main", { type: "random" });
-    
+
     if (res.status === 200) {
       alert("Link generated successfully");
+      setState((prev) => {
+        return {
+          ...prev,
+          mainLink: {
+            ...prev.mainLink,
+            value: res.data.mainUrl.value,
+          },
+        };
+      });
     }
+  }
+
+  function copyMainLinkToClipboard(e) {
+    e.preventDefault();
+    const el = document.createElement("textarea");
+    el.value = state.mainLink.value;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand("copy");
+    document.body.removeChild(el);
+
+    setCopied(true);
+
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
+  }
+
+  function handleRadioChange(e) {
+    const value = e.target.value;
+
+    console.log(value)
+
+    setState((prev) => {
+      return {
+        ...prev,
+        mainLink: {
+          ...prev.mainLink,
+          type: value,
+        },
+      };
+    });
   }
 
   return (
@@ -158,36 +212,46 @@ function Maincontent() {
                     </button>
 
                     <div className="redioButtons">
-                      <div class="form-check">
+                      <div className="form-check">
                         <input
-                          class="form-check-input"
+                          className="form-check-input"
                           type="radio"
                           name="flexRadioDefault"
                           id="flexRadioDefault1"
+                          value="random"
+                          onChange={(e) => handleRadioChange(e)}
                         />
                         <label
-                          class="form-check-label randomLBL"
-                          for="flexRadioDefault1"
+                          className="form-check-label randomLBL"
+                          htmlFor="flexRadioDefault1"
                         >
                           Random Link
                         </label>
                       </div>
-                      <div class="form-check">
+                      <div className="form-check">
                         <input
-                          class="form-check-input"
+                          className="form-check-input"
                           type="radio"
                           name="flexRadioDefault"
                           id="flexRadioDefault2"
                           checked
+                          value="lineal"
+                          onChange={(e) => handleRadioChange(e)}
                         />
-                        <label class="form-check-label" for="flexRadioDefault2">
+                        <label
+                          className="form-check-label"
+                          htmlFor="flexRadioDefault2"
+                        >
                           Lineal Link
                         </label>
                       </div>
                     </div>
                   </div>
 
-                  <form className="input-group">
+                  <form
+                    onSubmit={(e) => copyMainLinkToClipboard(e)}
+                    className="input-group"
+                  >
                     <button className="mainBtn customBtn" type="submit">
                       <img
                         src="/img/premium.png"
@@ -201,10 +265,22 @@ function Maincontent() {
                       type="text"
                       className="form-control"
                       placeholder="enter Url"
+                      value={state.mainLink.value}
+                      onChange={(e) => {
+                        setState((prev) => {
+                          return {
+                            ...prev,
+                            mainLink: {
+                              ...prev.mainLink,
+                              value: e.target.value,
+                            },
+                          };
+                        });
+                      }}
                     />
 
-                    <button className="mainBtn copyBtn" type="submit">
-                      Copy
+                    <button className="mainBtn copyBtn">
+                      {copied ? "Copied" : "Copy"}
                     </button>
                   </form>
                 </div>
