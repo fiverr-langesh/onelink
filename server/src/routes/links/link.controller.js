@@ -3,6 +3,7 @@ const { format } = require("date-fns");
 
 require("dotenv").config();
 const PORT = process.env.PORT;
+const HOST = process.env.HOST;
 
 // GET /api/link - get all links
 async function getLinks(req, res) {
@@ -119,7 +120,7 @@ async function setMainLink(req, res) {
     // random 10 digit mainURLID
     const mainUrlId = Math.random().toString(36).substr(2, 10);
 
-    const url = `http://localhost:${PORT}/${mainUrlId}`;
+    const url = `http://${HOST}:${PORT}/${mainUrlId}`;
 
     const mainUrl = {
       value: url,
@@ -142,7 +143,43 @@ async function setMainLink(req, res) {
   }
 }
 
+// PUT /api/link/main/customize - customize main link
+async function customizeMainLink(req, res) {
+  try {
+    const { value } = req.body;
 
+    // check hostname or port or protocol have changed
+    const url = new URL(value);
+
+    if (url.hostname !== HOST || url.port !== PORT) {
+      return res.status(400).json({ message: "Don't change hostname or port" });
+    }
+
+    const mainLinkId = value.split("/").pop();
+
+    const isMainIdAlreadyTaken = await Link.findOne({ mainUrlId: mainLinkId });
+
+    if (isMainIdAlreadyTaken) {
+      return res.status(400).json({ message: "Main link ID already taken" });
+    }
+
+    const link = await Link.findOneAndUpdate(
+      { groupId: "default", userId: "default" },
+      {
+        mainUrl: {
+          value,
+        },
+        mainUrlId: mainLinkId,
+      },
+      { new: true }
+    );
+
+    res.status(200).json({ message: "Main link updated" });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+}
 
 module.exports = {
   createLink,
@@ -152,4 +189,5 @@ module.exports = {
   deleteLink,
   deleteAllLinks,
   setMainLink,
+  customizeMainLink,
 };

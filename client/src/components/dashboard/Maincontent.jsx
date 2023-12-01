@@ -14,6 +14,7 @@ function Maincontent() {
   const [url, setUrl] = React.useState("");
   const [fallback, setFallback] = useState("");
   const [copied, setCopied] = useState(false);
+  const [edit, setEdit] = useState({});
 
   const [show, setShow] = useState(false);
 
@@ -30,15 +31,17 @@ function Maincontent() {
   const closeLoop = () => setloop(false);
   const showLoop = () => setloop(true);
 
+  const [selectedValue, setSelectedValue] = useState("lineal");
+
   useEffect(() => {
-    console.log(state)
-  },[state])
+    console.log(state);
+  }, [state]);
 
   useEffect(() => {
     async function getUrl() {
       const res = await api.get("/link");
 
-      if (res.data?.links?.length > 0 && res.status === 200) {
+      if (res.data && res.status === 200) {
         setState((prev) => {
           return {
             ...prev,
@@ -55,8 +58,13 @@ function Maincontent() {
     getUrl();
   }, []);
 
+  useEffect(() => {
+    if (edit.url) {
+      setUrl(edit.url);
+    }
+  },[edit])
+
   async function saveLinks() {
-    console.log(state);
     handleClose();
     const res = await api.post("/link/save", {
       links: state.links,
@@ -64,18 +72,43 @@ function Maincontent() {
     });
 
     if (res.status === 200) {
-      alert("Links saved successfully");
+      // alert("Links saved successfully");
     }
   }
 
   function addUrl(e) {
     e.preventDefault();
+    const day = new Date().getDate();
+    const month = new Date().getMonth();
+    const year = new Date().getFullYear() % 100; // Extract last two digits
+    const date = `${day}/${month}/${year}`;
+
+    if (edit) {
+      const updatedLinks = state.links.map((item) => {
+        console.log(item.id, edit.id, item._id, edit._id)
+        if (item.id === edit.id && item.id != undefined || item._id === edit._id && item._id !== undefined) {
+          return {
+            ...item,
+            date,
+            url,
+          };
+        } else {
+          return item;
+        }
+      });
+
+      setState((prev) => ({
+        ...prev,
+        links: updatedLinks,
+      }));
+
+      setEdit({});
+      setUrl("");
+      return;
+    }
 
     if (url) {
-      const day = new Date().getDate();
-      const month = new Date().getMonth();
-      const year = new Date().getFullYear() % 100; // Extract last two digits
-      const date = `${day}/${month}/${year}`;
+      
 
       const id = Math.floor(Math.random() * 1000000000);
 
@@ -112,19 +145,34 @@ function Maincontent() {
   }
 
   async function generateMainLink() {
-    const res = await api.post("/link/main", { type: "random" });
+    const res = await api.post("/link/main", { type: state.mainLink.type });
 
     if (res.status === 200) {
-      alert("Link generated successfully");
+      alert("Main Link generated successfully");
       setState((prev) => {
         return {
           ...prev,
           mainLink: {
-            ...prev.mainLink,
+            type: res.data.mainUrl.type,
             value: res.data.mainUrl.value,
           },
         };
       });
+    }
+  }
+
+  async function customizeMainLink() {
+    try {
+      const res = await api.put("/link/main/customize", {
+      value: state.mainLink.value,
+    });
+
+    if (res.status === 200) {
+      alert("Main Link customized successfully");
+    }
+    } catch (e) {
+      console.log(e);
+      alert(e.response.data.message)
     }
   }
 
@@ -147,7 +195,7 @@ function Maincontent() {
   function handleRadioChange(e) {
     const value = e.target.value;
 
-    console.log(value)
+    console.log(value);
 
     setState((prev) => {
       return {
@@ -219,7 +267,8 @@ function Maincontent() {
                           name="flexRadioDefault"
                           id="flexRadioDefault1"
                           value="random"
-                          onChange={(e) => handleRadioChange(e)}
+                          checked={state.mainLink.type === "random"}
+                          onChange={handleRadioChange}
                         />
                         <label
                           className="form-check-label randomLBL"
@@ -228,15 +277,16 @@ function Maincontent() {
                           Random Link
                         </label>
                       </div>
+
                       <div className="form-check">
                         <input
                           className="form-check-input"
                           type="radio"
                           name="flexRadioDefault"
                           id="flexRadioDefault2"
-                          checked
                           value="lineal"
-                          onChange={(e) => handleRadioChange(e)}
+                          checked={state.mainLink.type === "lineal"}
+                          onChange={handleRadioChange}
                         />
                         <label
                           className="form-check-label"
@@ -252,7 +302,11 @@ function Maincontent() {
                     onSubmit={(e) => copyMainLinkToClipboard(e)}
                     className="input-group"
                   >
-                    <button className="mainBtn customBtn" type="submit">
+                    <button
+                      onClick={customizeMainLink}
+                      className="mainBtn customBtn"
+                      type="submit"
+                    >
                       <img
                         src="/img/premium.png"
                         alt="premium"
@@ -267,6 +321,21 @@ function Maincontent() {
                       placeholder="enter Url"
                       value={state.mainLink.value}
                       onChange={(e) => {
+                        // split the url apart from mainid e.g. https://www.google.com/1234 -> https://www.google.com/
+                        let splitted = e.target.value.split("/");
+                        const customized = splitted[0] + "//" + splitted[2] + "/"
+
+                        splitted = state.mainLink.value.split("/");
+                        const mainUrl = splitted[0] + "//" + splitted[2] + "/";
+
+                        if (customized !== mainUrl) {
+                          alert("You can't change the url only change the id at the end of the url");
+                          return;
+                        }
+
+                        console.log(mainUrl)
+
+                        
                         setState((prev) => {
                           return {
                             ...prev,
@@ -311,6 +380,7 @@ function Maincontent() {
                                     src="/img/tedit.svg"
                                     alt="edit"
                                     className="img-fluid"
+                                    onClick={() => setEdit(item)}
                                   />
                                 </a>
                                 <a href="#link" className="tableBtn deleteBtn">
