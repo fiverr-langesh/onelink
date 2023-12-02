@@ -83,9 +83,8 @@ function Maincontent() {
     const year = new Date().getFullYear() % 100; // Extract last two digits
     const date = `${day}/${month}/${year}`;
 
-    if (edit) {
+    if (edit.id || edit._id) {
       const updatedLinks = state.links.map((item) => {
-        console.log(item.id, edit.id, item._id, edit._id)
         if (item.id === edit.id && item.id != undefined || item._id === edit._id && item._id !== undefined) {
           return {
             ...item,
@@ -108,8 +107,6 @@ function Maincontent() {
     }
 
     if (url) {
-      
-
       const id = Math.floor(Math.random() * 1000000000);
 
       const payload = {
