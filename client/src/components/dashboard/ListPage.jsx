@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Col, Row, Container } from "react-bootstrap";
+import { Col, Row, Container ,Modal} from "react-bootstrap";
 import api from "../../utils/api";
 
 function ListPage() {
   const [lists, setLists] = useState([]);
   const [selectedList, setSelectedList] = useState(null);
+   const [show, setShow] = useState(false);
+
+   const handleClose = () => setShow(false);
+   const handleShow = () => setShow(true);
 
   useEffect(() => {
     async function getList() {
@@ -22,8 +26,8 @@ function ListPage() {
     });
 
     const res = api.put(`/link/${selectedList._id}`, { links: updatedLinks });
-    
-    console.log(res)
+
+    console.log(res);
 
     setSelectedList((prev) => ({
       ...prev,
@@ -56,52 +60,74 @@ function ListPage() {
             <Row className="panelContent">
               <Col lg={"12"}>
                 <div className="topPanel panelTwo">
-                  {!lists.length && (
-                    <div className="nodeImage">
-                      <img
-                        src="/img/notebook.png"
-                        alt="notebook"
-                        className="img-fluid"
-                      />
-                      <p className="noteTitle">No Records yet </p>
-                    </div>
-                  )}
                   <div className="topNav">
                     <p className="navTitle">List Name</p>
                     <p className="navTitle">Links in List</p>
                     <a
-                      href="#"
                       onClick={deleteAllList}
+                      href="#link"
                       className="navTitle deleteBtn"
                     >
                       Delete all
                     </a>
                   </div>
-                  <div className="">
-                    <table width={"100%"}>
+
+                  <div className="recordTable table-responsive">
+                    {!lists.length && (
+                      <div className="nodeImage">
+                        <img
+                          src="/img/notebook.png"
+                          alt="notebook"
+                          className="img-fluid"
+                        />
+                        <p className="noteTitle">No Records yet </p>
+                      </div>
+                    )}
+                    <table class="table">
                       <tbody>
                         {lists.map((item) => {
                           return (
-                            <tr
-                              className="highlight-tr"
-                              key={item._id}
-                              onClick={() => setSelectedList(item)}
-                            >
-                              <td>{item.listName}</td>
-                              <td>{item.links.length}</td>
+                            <tr>
+                              <td
+                                style={{ cursor: "pointer" }}
+                                onClick={() => setSelectedList(item)}
+                                className="highlight"
+                              >
+                                {item.listName}
+                              </td>
+                              <td
+                                style={{ cursor: "pointer" }}
+                                onClick={() => setSelectedList(item)}
+                                className="highlight"
+                              >
+                                {item.links.length}
+                              </td>
                               <td>
-                                <button
-                                  onClick={() => deleteList(item._id)}
-                                  href="#link"
-                                  className="tableBtn delete-btn"
-                                >
-                                  <img
-                                    src="/img/tdelete.svg"
-                                    alt="edit"
-                                    className="img-fluid "
-                                    //   onClick={() => deleteUrl(item.id || item._id)}
-                                  />
-                                </button>
+                                <a href="#" className="useBtn">
+                                  Reuse List
+                                </a>
+                              </td>
+                              <td>
+                                <div className="dataButtons">
+                                  <a href="#" className="tableBtn editBtn">
+                                    <img
+                                      src="/img/edit.svg"
+                                      alt="edit"
+                                      className="img-fluid"
+                                    />
+                                  </a>
+                                  <a
+                                    onClick={() => deleteList(item._id)}
+                                    href="#"
+                                    className="tableBtn deleteBtn"
+                                  >
+                                    <img
+                                      src="/img/delete.svg"
+                                      alt="edit"
+                                      className="img-fluid"
+                                    />
+                                  </a>
+                                </div>
                               </td>
                             </tr>
                           );
@@ -186,7 +212,7 @@ function ListPage() {
           </Col>
           <Col lg={"3"}>
             <div className="rightContent rightContentTwo">
-              <div className="errorContent">
+              {/* <div className="errorContent">
                 <img
                   src="/img/error.png"
                   alt="erroImage"
@@ -196,11 +222,58 @@ function ListPage() {
                   Oops looks like you have no other groups right now
                 </h5>
                 <p className="text">Let’s fix that by creating a new group</p>
+              </div> */}
+              <div className="addCheckbox">
+                <h5 className="title">
+                  Choose the group(s) on which you want to apply this list
+                </h5>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="flexCheckDefault"
+                  />
+                  <label class="form-check-label" for="flexCheckDefault">
+                    Group 1
+                  </label>
+                </div>
+                
+
+                <div className="addButtons">
+                  <a href="#link" className="mainBtn">
+                    Cancel
+                  </a>
+                  <a
+                    href="#link"
+                    className="mainBtn saveBtn"
+                    onClick={handleShow}
+                  >
+                    Save
+                  </a>
+                </div>
               </div>
             </div>
           </Col>
         </Row>
       </Container>
+
+      <Modal show={show} onHide={handleClose} className="groupModel">
+        <Modal.Body>
+          <h4 className="title">
+            You want to use this list in multiple groups?
+          </h4>
+
+          <div className="addButtons">
+            <a href="#link" className="mainBtn" onClick={handleClose}>
+              Cancel
+            </a>
+            <a href="#link" className="mainBtn saveBtn" onClick={handleShow}>
+              Yes
+            </a>
+          </div>
+        </Modal.Body>
+      </Modal>
     </section>
   );
 }
