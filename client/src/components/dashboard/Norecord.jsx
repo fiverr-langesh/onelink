@@ -18,14 +18,31 @@ function Norecord() {
                     </a>
                   </div>
 
-                  <div className="nodeImage">
-                    <img
-                      src="/img/notebook.png"
-                      alt="notebook"
-                      className="img-fluid"
-                    />
-
-                    <p className="noteTitle">No Records yet </p>
+                  <div className="nodeTable">
+                    <table class="table">
+                      <tbody>
+                        <tr>
+                          <td>Group 1</td>
+                          <td>https://www.waves.com/</td>
+                          <td>Active</td>
+                        </tr>
+                        <tr>
+                          <td>Group 1</td>
+                          <td>https://www.waves.com/</td>
+                          <td>Active</td>
+                        </tr>
+                        <tr>
+                          <td>Group 1</td>
+                          <td>https://www.waves.com/</td>
+                          <td>Active</td>
+                        </tr>
+                        <tr>
+                          <td>Group 1</td>
+                          <td>https://www.waves.com/</td>
+                          <td>Active</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </Col>

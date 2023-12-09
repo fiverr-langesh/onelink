@@ -6,11 +6,50 @@ const PORT = process.env.PORT;
 const HOST = process.env.HOST;
 
 // GET /api/link - get all links
-async function getLinks(req, res) {
+async function getList(req, res) {
   try {
-    const links = await Link.findOne({ groupId: "default", userId: "default" });
+    const links = await Link.find({ groupId: "default", userId: "default" });
 
     res.status(200).json(links);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+}
+
+// DELETE /api/link/li/:id - delete a list
+async function deleteList(req, res) {
+  try {
+    const { id } = req.params;
+
+    await Link.findByIdAndDelete(id);
+
+    res.status(200).json({ message: "Link deleted" });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+}
+
+// DELETE /api/link/li/ - delete all lists
+async function deleteAllLists(req, res) {
+  try {
+    await Link.deleteMany({});
+    res.status(200).json({ message: "All links deleted" });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+}
+
+// GET /api/link/recently-created - get recently created link
+async function getRecentlyCreatedLink(req, res) {
+  try {
+    const link = await Link.find({ groupId: "default", userId: "default" })
+      .sort({ _id: -1 })
+      .limit(1);
+
+    res.status(200).json(link[0]);
   } catch (e) {
     console.error(e);
     res.status(500).json({ message: "Something went wrong" });
@@ -43,26 +82,18 @@ async function saveLink(req, res) {
       userId = "default";
     }
 
-    const group = await Link.findOne({ groupId, userId });
+    // find no of records with the groupId and userId
+    const count = await Link.countDocuments({ groupId, userId });
 
-    if (!group) {
-      const createdLinks = await Link.create({
-        links,
-        groupId,
-        userId,
-        fallbackUrl,
-      });
+    const createdLinks = await Link.create({
+      links,
+      listName: `List ${count + 1}`,
+      groupId,
+      userId,
+      fallbackUrl,
+    });
 
-      return res.json(createdLinks);
-    } else {
-      const createdLinks = await Link.findOneAndUpdate(
-        { groupId, userId },
-        { links, fallbackUrl },
-        { new: true }
-      );
-
-      return res.json(createdLinks);
-    }
+    return res.json(createdLinks);
   } catch (e) {
     console.error(e);
     res.status(500).json({ message: "Something went wrong" });
@@ -73,11 +104,11 @@ async function saveLink(req, res) {
 async function updateLink(req, res) {
   try {
     const { id } = req.params;
-    const { url } = req.body;
+    // const { url } = req.body;
 
     const date = format(new Date(), "dd-MM-yy");
 
-    const link = await Link.findByIdAndUpdate(id, { url, date }, { new: true });
+    const link = await Link.findByIdAndUpdate(id, { ...req.body, date }, { new: true });
 
     res.status(200).json(link);
   } catch (e) {
@@ -115,7 +146,7 @@ async function deleteAllLinks(req, res) {
 // POST /api/link/main - set main link
 async function setMainLink(req, res) {
   try {
-    const { type } = req.body;
+    const { type ,id} = req.body;
 
     // random 10 digit mainURLID
     const mainUrlId = Math.random().toString(36).substr(2, 10);
@@ -127,8 +158,8 @@ async function setMainLink(req, res) {
       type,
     };
 
-    const link = await Link.findOneAndUpdate(
-      { groupId: "default", userId: "default" },
+    const link = await Link.findByIdAndUpdate(
+      id,
       {
         mainUrlId,
         mainUrl,
@@ -183,11 +214,14 @@ async function customizeMainLink(req, res) {
 
 module.exports = {
   createLink,
-  getLinks,
+  getList,
   saveLink,
   updateLink,
   deleteLink,
   deleteAllLinks,
   setMainLink,
   customizeMainLink,
+  getRecentlyCreatedLink,
+  deleteList,
+  deleteAllLists
 };

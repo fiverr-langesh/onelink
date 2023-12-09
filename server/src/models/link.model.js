@@ -4,6 +4,7 @@ const schema = new mongoose.Schema(
   {
     userId: String,
     groupId: String,
+    listName: String,
     links: [
       {
         url: String,

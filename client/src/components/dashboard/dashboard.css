@@ -992,3 +992,29 @@
 .scheduleSection .schedulMenu .menuContent .groupTwo .groupName {
   color: #fff;
 }
+
+.delete-btn{
+  background-color: var(--bg-dashboard);
+  display: inline-block;
+  text-decoration: none;
+  padding: 0.3rem 1.7rem;
+  border: 1px solid #fff;
+  border-radius: 0.5rem;
+}
+
+.highlight-tr {
+  /* background-color: var(--bg-dashboard) !important; */
+  width: 100%;
+  /* padding-right: 60px; */
+  /* padding-left: 60px; */
+  padding: 5px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.highlight-tr:hover {
+  background-color: var(--bg-dashboard) !important;
+  color: #fff;
+}

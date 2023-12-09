@@ -10,6 +10,7 @@ function Maincontent() {
       type: "lineal",
       value: "",
     },
+    id: null,
   });
   const [url, setUrl] = React.useState("");
   const [fallback, setFallback] = useState("");
@@ -39,7 +40,9 @@ function Maincontent() {
 
   useEffect(() => {
     async function getUrl() {
-      const res = await api.get("/link");
+      const res = await api.get("/link/recently-created");
+
+      console.log("res", res.data);
 
       if (res.data && res.status === 200) {
         setState((prev) => {
@@ -48,6 +51,7 @@ function Maincontent() {
             links: res.data.links,
             fallbackUrl: res.data.fallbackUrl,
             mainLink: res.data.mainUrl,
+            id: res.data._id,
           };
         });
 
@@ -62,7 +66,7 @@ function Maincontent() {
     if (edit.url) {
       setUrl(edit.url);
     }
-  },[edit])
+  }, [edit]);
 
   async function saveLinks() {
     handleClose();
@@ -73,6 +77,13 @@ function Maincontent() {
 
     if (res.status === 200) {
       // alert("Links saved successfully");
+      setState((prev) => {
+        return {
+          ...prev,
+          id: res.data._id,
+          mainLink: {value: "", type: "lineal"},
+        };
+      });
     }
   }
 
@@ -85,7 +96,10 @@ function Maincontent() {
 
     if (edit.id || edit._id) {
       const updatedLinks = state.links.map((item) => {
-        if (item.id === edit.id && item.id != undefined || item._id === edit._id && item._id !== undefined) {
+        if (
+          (item.id === edit.id && item.id != undefined) ||
+          (item._id === edit._id && item._id !== undefined)
+        ) {
           return {
             ...item,
             date,
@@ -142,7 +156,14 @@ function Maincontent() {
   }
 
   async function generateMainLink() {
-    const res = await api.post("/link/main", { type: state.mainLink.type });
+    if (!state.id) {
+      alert("Please save the list first");
+    }
+
+    const res = await api.post("/link/main", {
+      type: state.mainLink.type,
+      id: state.id,
+    });
 
     if (res.status === 200) {
       alert("Main Link generated successfully");
@@ -161,15 +182,15 @@ function Maincontent() {
   async function customizeMainLink() {
     try {
       const res = await api.put("/link/main/customize", {
-      value: state.mainLink.value,
-    });
+        value: state.mainLink.value,
+      });
 
-    if (res.status === 200) {
-      alert("Main Link customized successfully");
-    }
+      if (res.status === 200) {
+        alert("Main Link customized successfully");
+      }
     } catch (e) {
       console.log(e);
-      alert(e.response.data.message)
+      alert(e.response.data.message);
     }
   }
 
@@ -193,6 +214,10 @@ function Maincontent() {
     const value = e.target.value;
 
     console.log(value);
+
+    const res = api.put(`/link/${state.id}`, { mainUrl: {type:value,value: state.mainLink.value} });
+
+    console.log(res);
 
     setState((prev) => {
       return {
@@ -227,7 +252,7 @@ function Maincontent() {
                       Add Url
                     </button>
                   </form>
-                  <form className="input-group">
+                  <div className="input-group">
                     <input
                       type="text"
                       className="form-control"
@@ -249,7 +274,7 @@ function Maincontent() {
                     >
                       Add fallback Url
                     </button>
-                  </form>
+                  </div>
 
                   <div className="formButtons">
                     <button onClick={generateMainLink} className="mainBtn">
@@ -320,19 +345,21 @@ function Maincontent() {
                       onChange={(e) => {
                         // split the url apart from mainid e.g. https://www.google.com/1234 -> https://www.google.com/
                         let splitted = e.target.value.split("/");
-                        const customized = splitted[0] + "//" + splitted[2] + "/"
+                        const customized =
+                          splitted[0] + "//" + splitted[2] + "/";
 
                         splitted = state.mainLink.value.split("/");
                         const mainUrl = splitted[0] + "//" + splitted[2] + "/";
 
                         if (customized !== mainUrl) {
-                          alert("You can't change the url only change the id at the end of the url");
+                          alert(
+                            "You can't change the url only change the id at the end of the url"
+                          );
                           return;
                         }
 
-                        console.log(mainUrl)
+                        console.log(mainUrl);
 
-                        
                         setState((prev) => {
                           return {
                             ...prev,
