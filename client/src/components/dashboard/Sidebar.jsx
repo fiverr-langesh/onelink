@@ -61,7 +61,7 @@ function Sidebar() {
         <div className="gHeading">
           <div className="mainTitle">
             <p className="title">Groups</p>
-            <Link to="/addgroup" className="plusBtn">
+            <Link to="#link" className="plusBtn">
               <img src="/img/plus.svg" alt="plus" />
             </Link>
           </div>
