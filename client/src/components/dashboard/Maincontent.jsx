@@ -158,6 +158,7 @@ function Maincontent() {
   async function generateMainLink() {
     if (!state.id) {
       alert("Please save the list first");
+      return;
     }
 
     const res = await api.post("/link/main", {
